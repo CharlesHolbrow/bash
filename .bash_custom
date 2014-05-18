@@ -45,7 +45,7 @@ elif [ $platform == 'freebsd' -o $platform == 'osx' ]; then
     alias ls='ls -G'
 fi
 
-# add colors to ls command output - OSX version - For details: $ man ls:
+# Custom command prompt (with colors!)
 export PS1="\[$(tput bold)\]\[$(tput setaf 1)\]\w:\[$(tput sgr0)\]\\$ "
 
 export SVN_EDITOR=emacs
