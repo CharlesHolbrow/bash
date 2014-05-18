@@ -1,0 +1,6 @@
+# Ignore Everything
+*
+
+# Bang to exclude from ignore pattern
+!.gitignore
+!.bash_custom

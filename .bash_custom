@@ -1,0 +1,51 @@
+# Charles' Shell Configuration
+# To install: 
+# $ echo ".bash_custom" >> .bash_profile
+
+# Get platform
+platform='unknown'
+unamestr=`uname`
+if [ "$unamestr" == 'Linux' ]; then
+  platform='linux'
+elif [ "$unamestr" == 'FreeBSD' ]; then
+  platform='freebsd'
+elif [ "$unamestr" == 'Darwin' ]; then
+  platform='osx'
+fi
+
+# Charles' git aliases
+alias ga='git add'
+alias gd='git diff'
+alias gs='git status'
+alias gc='git commit'
+alias gcm='git commit -m'
+
+# Charles misc aliases
+alias ap='ack --python'
+alias aj='ack --js'
+alias ll='ls -l'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../../'
+alias ccat='highlight -O ansi'
+
+# mack
+meteorAck() {
+  ack --js $1 . --ignore-dir packages/*/.build --ignore-dir .meteor/
+}
+alias mack=meteorAck
+
+# display my aliases
+alias
+
+# Colorize ls output
+if [ $platform == 'linux' ]; then
+   alias ls='ls --color=auto'
+elif [ $platform == 'freebsd' -o $platform == 'osx' ]; then
+    alias ls='ls -G'
+fi
+
+# add colors to ls command output - OSX version - For details: $ man ls:
+export PS1="\[$(tput bold)\]\[$(tput setaf 1)\]\w:\[$(tput sgr0)\]\\$ "
+
+export SVN_EDITOR=emacs
