@@ -40,12 +40,11 @@ alias
 
 # Colorize ls output
 if [ $platform == 'linux' ]; then
-   alias ls='ls --color=auto'
+  alias ls='ls --color=auto'
 elif [ $platform == 'freebsd' -o $platform == 'osx' ]; then
     alias ls='ls -G'
 fi
 
 # Custom command prompt (with colors!)
-export PS1="\[$(tput bold)\]\[$(tput setaf 1)\]\w:\[$(tput sgr0)\]\\$ "
-
+export PS1="\u@\h \[$(tput bold)\]\[$(tput setaf 1)\]\W \[$(tput setaf 2)\]\\$\[$(tput sgr0)\] "
 export SVN_EDITOR=emacs
