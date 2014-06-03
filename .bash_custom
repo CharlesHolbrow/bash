@@ -31,7 +31,7 @@ alias ccat='highlight -O ansi'
 
 # mack
 meteorAck() {
-  ack --js $1 . --ignore-dir packages/*/.build --ignore-dir .meteor/
+  ack --js $1 . --ignore-dir .build --ignore-dir .meteor/
 }
 alias mack=meteorAck
 
