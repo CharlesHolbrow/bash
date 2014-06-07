@@ -29,6 +29,10 @@ alias ...='cd ../..'
 alias ....='cd ../../../'
 alias ccat='highlight -O ansi'
 
+if [ $platform == 'linux' ]; then
+    alias ack=ack-grep # is this for linux? or only debian?
+fi
+
 # mack
 meteorAck() {
   ack --js $1 . --ignore-dir .build --ignore-dir .meteor/
