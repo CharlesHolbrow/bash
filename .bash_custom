@@ -29,11 +29,10 @@ alias ...='cd ../..'
 alias ....='cd ../../../'
 alias ccat='highlight -O ansi'
 
-# mack
-meteorAck() {
-  ack --js $1 . --ignore-dir .build --ignore-dir .meteor/
+# meteor ack
+mack() {
+  find ./ ! -path '*.build*' ! -path '*.npm*' ! -path '*.meteor*' ! -path '.git' -regex '.*\js' -o -regex '.*coffee' | ack -x $1
 }
-alias mack=meteorAck
 
 # display my aliases
 alias
