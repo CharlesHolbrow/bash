@@ -11,6 +11,8 @@ elif [ "$unamestr" == 'FreeBSD' ]; then
   platform='freebsd'
 elif [ "$unamestr" == 'Darwin' ]; then
   platform='osx'
+elif [[ "$unamestr" == CYGWIN* ]]; then
+  platform='cygwin'
 fi
 
 # Charles' git aliases
