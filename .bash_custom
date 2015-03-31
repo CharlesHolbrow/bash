@@ -44,7 +44,7 @@ mack() {
 alias
 
 # Colorize ls output
-if [ $platform == 'linux' ]; then
+if [ $platform == 'linux' -o $platform == 'cygwin' ]; then
   alias ls='ls --color=auto'
 elif [ $platform == 'freebsd' -o $platform == 'osx' ]; then
     alias ls='ls -G'
