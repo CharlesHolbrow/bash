@@ -1,6 +1,6 @@
 # Charles' Shell Configuration
 # To install: 
-# $ echo ".bash_custom" >> .bash_profile
+# $ echo "source .bash_custom" >> .bash_profile
 
 # Get platform
 platform='unknown'
