@@ -51,8 +51,10 @@ elif [ $platform == 'freebsd' -o $platform == 'osx' ]; then
 fi
 
 # bash completion on osx (requires $brew install bash-completion)
-if [ $platform == 'osx' -a `which brew` -a -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
+if [ $platform == 'osx' -a `which brew` ]; then
+  if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+  fi
 fi
 
 # Custom command prompt (with colors!)
@@ -60,4 +62,4 @@ export PS1="\u@\h \[$(tput bold)\]\[$(tput setaf 1)\]\W \[$(tput setaf 2)\]$\[$(
 export SVN_EDITOR=emacs
 
 # Meteor Helper
-export PACKAGE_DIRS="/Users/charles/projects/meteor/PixelAetherGameServer/packages/"
+export PACKAGE_DIRS="/Users/charles/projects/meteor/PixelAetherPackages/:/Users/charles/projects/meteor/PixelAetherGameServer/packages/"
