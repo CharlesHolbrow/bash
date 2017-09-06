@@ -61,7 +61,7 @@ if [ $platform == 'osx' -a "$(which brew)" ]; then
 fi
 
 # Custom command prompt (with colors!)
-export PS1="\u@\h \[$(tput bold)\]\[$(tput setaf 1)\]\W \[$(tput setaf 2)\]$\[$(tput sgr0)\] "
+export PS1="\u@\[$(tput setaf 5)\]\[$(tput bold)\]\h \[$(tput setaf 1)\]\W \[$(tput setaf 2)\]$\[$(tput sgr0)\] "
 export SVN_EDITOR=emacs
 
 # Meteor Helper
