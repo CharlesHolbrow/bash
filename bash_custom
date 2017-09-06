@@ -30,6 +30,7 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../../'
 alias .....='cd ../../../../'
+alias ......='cd ../../../../../'
 alias ccat='highlight -O ansi'
 
 if [ $platform == 'linux' ]; then
