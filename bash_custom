@@ -32,22 +32,24 @@ alias aj='ack --js'
 alias ll='ls -l'
 alias ..='cd ..'
 alias ...='cd ../..'
-alias ....='cd ../../../'
-alias .....='cd ../../../../'
-alias ......='cd ../../../../../'
 alias ccat='highlight -O ansi'
+alias sagent='eval $(ssh-agent) && ssh-add'
 
 if [ $platform == 'linux' ]; then
     alias ack=ack-grep # is this for linux? or only debian?
 fi
 
+# display my aliases
+alias
+
+alias ....='cd ../../../'
+alias .....='cd ../../../../'
+alias ......='cd ../../../../../'
+
 # meteor ack
 mack() {
   find . ! -path '*node_modules*' ! -path '*.build*' ! -path '*.npm*' ! -path '*.meteor*' ! -path '.git' | grep '.*\.js\|.*\.coffee' | ack -x $1
 }
-
-# display my aliases
-alias
 
 # Colorize ls output
 if [ $platform == 'linux' -o $platform == 'cygwin' ]; then
