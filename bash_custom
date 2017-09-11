@@ -15,6 +15,10 @@ elif [[ "$unamestr" == CYGWIN* ]]; then
   platform='cygwin'
 fi
 
+echo ""
+echo "----- platform: $platform -----"
+echo ""
+
 # Charles' git aliases
 alias ga='git add'
 alias gd='git diff'
@@ -53,11 +57,15 @@ elif [ $platform == 'freebsd' -o $platform == 'osx' ]; then
 fi
 
 # bash completion on osx (requires $brew install bash-completion)
-if [ $platform == 'osx' -a "$(which brew)" ]; then
-  if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    source $(brew --prefix)/etc/bash_completion
+if [ $platform == 'osx' ]; then
+  if [ "$(which brew)" ]; then
+    if [ -f $(brew --prefix)/etc/bash_completion ]; then
+      source $(brew --prefix)/etc/bash_completion
+    else
+      echo 'Bash completion not installed. Install with: $ brew install bash-completion && brew tap homebrew/completions'
+    fi
   else
-    echo 'Bash completion not installed. Install with: $ brew install bash-completion && brew tap homebrew/completions'
+    echo 'Homebrew not installed'
   fi
 fi
 
