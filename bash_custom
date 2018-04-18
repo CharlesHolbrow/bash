@@ -39,6 +39,8 @@ if [ $platform == 'linux' ]; then
     alias ack=ack-grep # is this for linux? or only debian?
 fi
 
+alias kc=kubectl
+
 # display my aliases
 alias
 
@@ -74,6 +76,12 @@ fi
 # Custom command prompt (with colors!)
 export PS1="\u@\[$(tput setaf 5)\]\[$(tput bold)\]\h \[$(tput setaf 1)\]\W \[$(tput setaf 2)\]$\[$(tput sgr0)\] "
 export SVN_EDITOR=emacs
+
+# If emacs is installed, set it as the editor
+which emacs && export EDITOR=emacs
+
+# If kubectl is installed, setup bash completion
+which kubectl && source <(kubectl completion bash)
 
 # Meteor Helper
 export PACKAGE_DIRS="/Users/charles/projects/meteor/PixelAetherPackages/:/Users/charles/projects/meteor/PixelAetherGameServer/packages/"
