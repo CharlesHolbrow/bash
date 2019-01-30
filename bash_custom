@@ -36,12 +36,17 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ccat='highlight -O ansi'
 alias sagent='eval $(ssh-agent) && ssh-add'
+alias kc=kubectl
 
 if [ $platform == 'linux' ]; then
-    alias ack=ack-grep # is this for linux? or only debian?
+  alias ack=ack-grep # is this for linux? or only debian?
 fi
 
-alias kc=kubectl
+if [ $platform == 'mingw' ]; then
+  open() {
+    start `echo $1` | sed -e 's/^\///' -e 's/\//\\/g' -e 's/^./\0:/'
+  }
+fi
 
 # display my aliases
 alias
@@ -54,6 +59,20 @@ alias ......='cd ../../../../../'
 mack() {
   find . ! -path '*node_modules*' ! -path '*.build*' ! -path '*.npm*' ! -path '*.meteor*' ! -path '.git' | grep '.*\.js\|.*\.coffee' | ack -x $1
 }
+
+if [ $platform == 'mingw' ]; then
+  # OSX style `open` command in mingw
+  open() {
+    # `start` in a windows command, and requires a windows style path
+    win_path=$(sed '
+      \,/$, !s,$,/,
+      \,^/, s,/,:/,2
+      s,^/,,
+      s,/,\\,g
+      ' <<< $1)
+    start $win_path
+  }
+fi
 
 # Colorize ls output
 if [ $platform == 'linux' -o $platform == 'cygwin' ]; then
