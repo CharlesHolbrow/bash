@@ -13,6 +13,8 @@ elif [ "$unamestr" == 'Darwin' ]; then
   platform='osx'
 elif [[ "$unamestr" == CYGWIN* ]]; then
   platform='cygwin'
+elif [[ "$unamestr" == MINGW* ]]; then
+  platform='mingw'
 fi
 
 echo ""
@@ -62,7 +64,7 @@ fi
 
 # bash completion on osx (requires $brew install bash-completion)
 if [ $platform == 'osx' ]; then
-  if [ "$(which brew)" ]; then
+  if [ "$(which brew 2> /dev/null)" ]; then
     if type brew 2&>/dev/null; then
       for completion_file in $(brew --prefix)/etc/bash_completion.d/*; do
         source "$completion_file"
@@ -75,13 +77,15 @@ fi
 
 # Custom command prompt (with colors!)
 export PS1="\u@\[$(tput setaf 5)\]\[$(tput bold)\]\h \[$(tput setaf 1)\]\W \[$(tput setaf 2)\]$\[$(tput sgr0)\] "
-export SVN_EDITOR=emacs
 
 # If emacs is installed, set it as the editor
-which emacs && export EDITOR=emacs
+if [ "$(which emacs 2> /dev/null)" ]; then
+  export EDITOR=emacs
+  export SVN_EDITOR=emacs
+fi
 
 # If kubectl is installed, setup bash completion
-which kubectl && source <(kubectl completion bash)
+which kubectl 2> /dev/null && source <(kubectl completion bash)
 
 # Meteor Helper
 export PACKAGE_DIRS="/Users/charles/projects/meteor/PixelAetherPackages/:/Users/charles/projects/meteor/PixelAetherGameServer/packages/"
