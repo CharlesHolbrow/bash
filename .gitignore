@@ -4,3 +4,4 @@
 # Bang to exclude from ignore pattern
 !.gitignore
 !.bash_custom
+!zsh_custom
