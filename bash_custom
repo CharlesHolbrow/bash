@@ -1,6 +1,10 @@
-# Charles' Shell Configuration
-# To install: 
-# $ echo "source bash_custom" >> .bash_profile
+# Charles' bash AND zsh Shell Configuration
+#
+# To install in bash:
+# $ echo "source bash_custom" >> ~/.bash_profile
+#
+# To install in zsh:
+# $ echo "source bash_custom" >> ~/.zshrc
 
 # Get platform
 platform='unknown'
