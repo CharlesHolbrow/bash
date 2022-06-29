@@ -5,15 +5,15 @@
 # Get platform
 platform='unknown'
 unamestr=`uname`
-if [ "$unamestr" == 'Linux' ]; then
+if [ "$unamestr" = 'Linux' ]; then
   platform='linux'
-elif [ "$unamestr" == 'FreeBSD' ]; then
+elif [ "$unamestr" = 'FreeBSD' ]; then
   platform='freebsd'
-elif [ "$unamestr" == 'Darwin' ]; then
+elif [ "$unamestr" = 'Darwin' ]; then
   platform='osx'
-elif [[ "$unamestr" == CYGWIN* ]]; then
+elif [[ "$unamestr" = CYGWIN* ]]; then
   platform='cygwin'
-elif [[ "$unamestr" == MINGW* ]]; then
+elif [[ "$unamestr" = MINGW* ]]; then
   platform='mingw'
 fi
 
@@ -38,11 +38,11 @@ alias ccat='highlight -O ansi'
 alias sagent='eval $(ssh-agent) && ssh-add'
 alias kc=kubectl
 
-if [ $platform == 'linux' ]; then
+if [ $platform = 'linux' ]; then
   alias ack=ack-grep # is this for linux? or only debian?
 fi
 
-if [ $platform == 'mingw' ]; then
+if [ $platform = 'mingw' ]; then
   open() {
     start `echo $1` | sed -e 's/^\///' -e 's/\//\\/g' -e 's/^./\0:/'
   }
@@ -60,7 +60,7 @@ mack() {
   find . ! -path '*node_modules*' ! -path '*.build*' ! -path '*.npm*' ! -path '*.meteor*' ! -path '.git' | grep '.*\.js\|.*\.coffee' | ack -x $1
 }
 
-if [ $platform == 'mingw' ]; then
+if [ $platform = 'mingw' ]; then
   # OSX style `open` command in mingw
   open() {
     # `start` in a windows command, and requires a windows style path
@@ -75,19 +75,26 @@ if [ $platform == 'mingw' ]; then
 fi
 
 # Colorize ls output
-if [ $platform == 'linux' -o $platform == 'cygwin' ]; then
+if [ $platform = 'linux' -o $platform = 'cygwin' ]; then
   alias ls='ls --color=auto'
-elif [ $platform == 'freebsd' -o $platform == 'osx' ]; then
+elif [ $platform = 'freebsd' -o $platform = 'osx' ]; then
     alias ls='ls -G'
 fi
 
 # bash completion on osx (requires $brew install bash-completion)
-if [ $platform == 'osx' ]; then
+if [ $platform = 'osx' ]; then
   if [ "$(which brew 2> /dev/null)" ]; then
     if type brew 2&>/dev/null; then
-      for completion_file in $(brew --prefix)/etc/bash_completion.d/*; do
-        source "$completion_file"
-      done
+      # Bash completion
+      if [ $BASH ]; then
+        for completion_file in $(brew --prefix)/etc/bash_completion.d/*; do
+          source "$completion_file"
+        done
+      elif [ $ZSH_NAME ]; then
+        FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+        autoload -Uz compinit
+        compinit
+      fi
     fi
   else
     echo 'Homebrew not installed'
@@ -95,7 +102,13 @@ if [ $platform == 'osx' ]; then
 fi
 
 # Custom command prompt (with colors!)
-export PS1="\u@\[$(tput setaf 5)\]\[$(tput bold)\]\h \[$(tput setaf 1)\]\W \[$(tput setaf 2)\]$\[$(tput sgr0)\] "
+if [ $ZSH_NAME ]; then
+  # Pretty terminal colors via: https://stackoverflow.com/a/2534676/702912
+  autoload -U colors && colors
+  export PS1="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg[yellow]%}%~ %{$reset_color%}%% "
+elif [ $BASH ]; then
+  export PS1="\u@\[$(tput setaf 5)\]\[$(tput bold)\]\h \[$(tput setaf 1)\]\W \[$(tput setaf 2)\]$\[$(tput sgr0)\] "
+fi
 
 # If emacs is installed, set it as the editor
 if [ "$(which emacs 2> /dev/null)" ]; then
@@ -104,7 +117,9 @@ if [ "$(which emacs 2> /dev/null)" ]; then
 fi
 
 # If kubectl is installed, setup bash completion
-which kubectl 2> /dev/null && source <(kubectl completion bash)
+if [ $BASH ]; then
+  which kubectl 2> /dev/null && source <(kubectl completion bash)
+fi
 
 # Meteor Helper
 export PACKAGE_DIRS="/Users/charles/projects/meteor/PixelAetherPackages/:/Users/charles/projects/meteor/PixelAetherGameServer/packages/"
