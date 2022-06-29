@@ -124,6 +124,3 @@ fi
 if [ $BASH ]; then
   which kubectl 2> /dev/null && source <(kubectl completion bash)
 fi
-
-# Meteor Helper
-export PACKAGE_DIRS="/Users/charles/projects/meteor/PixelAetherPackages/:/Users/charles/projects/meteor/PixelAetherGameServer/packages/"
